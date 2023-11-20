@@ -1,0 +1,11 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "Desafios entregables Coderhouse NodeJS",
+  "main": "ProductManager.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Jonathan Griguol",
+  "license": "ISC"
+}
