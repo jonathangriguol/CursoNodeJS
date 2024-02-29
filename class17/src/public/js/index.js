@@ -41,26 +41,43 @@ socket.on("updateList", (data) => {
 
 // Función para manejar el clic en el botón "Add to cart"
 function addToCartHandler(event) {
-    // Obtén el ID del producto desde el atributo de datos del botón
-    const productId = event.target.dataset.productId;
-    
-    // Aquí puedes llamar a tu API con el ID del producto
-    // Por ejemplo:
-    // fetch(`/api/cart/add/${productId}`, {
-    //   method: 'POST',
-    //   // Otras opciones de configuración, como encabezados, cuerpo, etc.
-    // })
-    // .then(response => {
-    //   // Manejar la respuesta de la API
-    // })
-    // .catch(error => {
-    //   // Manejar errores
-    // });
-    
-    // Solo para fines de demostración
-    console.log(`Product ID ${productId} added to cart`);
-  }
-  
+  // Obtén el ID del producto desde el atributo de datos del botón
+  const productId = event.target.dataset.productId;
+
+  // Aquí puedes llamar a tu API con el ID del producto
+  // Por ejemplo:
+  // fetch(`/api/cart/add/${productId}`, {
+  //   method: 'POST',
+  //   // Otras opciones de configuración, como encabezados, cuerpo, etc.
+  // })
+  // .then(response => {
+  //   // Manejar la respuesta de la API
+  // })
+  // .catch(error => {
+  //   // Manejar errores
+  // });
+
+  const cartId = '65dd53a8bdd8b4a4ae2a27a7';
+
+  debugger;
+  fetch(`http://localhost:8080/api/carts/${cartId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify([{ productId: productId, quantity: 1 }]),
+    })
+    .then((data) => {
+      console.log(data);
+      window.location.href = `carts/${cartId}`;
+    })
+    .catch((error) => {
+      console.error("Error al cargar el listado:", error);
+    });
+
+  console.log(`Product ID ${productId} added to cart`);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   let pageSizeInput = document.getElementById("limit");
 
@@ -100,7 +117,6 @@ document.addEventListener("DOMContentLoaded", () => {
     button.addEventListener("click", addToCartHandler);
   });
 });
-
 
 // Enviar el formulario mediante AJAX para evitar la recarga de la página
 document

@@ -41,7 +41,6 @@ export default class CartDao {
 
   async updateProductsByCartId(cartId, products) {
     try {
-      console.log(products);
       const cart = await Cart.findById(cartId);
       
       // Verifica si el carrito existe, si no existe retorno error y corto el flujo

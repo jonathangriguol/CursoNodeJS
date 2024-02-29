@@ -40,6 +40,9 @@ router.put("/carts/:cid", async (req, res) => {
   const cartId = req.params.cid;
 
   try {
+
+    
+
     const products = await cartsService.updateProductsByCartId(cartId, req.body); // TODO: crear e implementar servicio
 
     if (products) {
