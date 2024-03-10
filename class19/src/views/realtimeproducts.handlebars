@@ -1,0 +1,128 @@
+<div id="container">
+  <div id="formulario">
+    <h2>New Product</h2>
+    <form id="data-form" action="/api/products" method="post">
+      <table>
+        <tr>
+          <td width="120"><label for="code">Code</label></td>
+          <td><input type="text" id="code" name="code" required /></td>
+        </tr>
+        <tr>
+          <td width="120"><label for="title">Title</label></td>
+          <td><input type="text" id="title" name="title" required /></td>
+        </tr>
+        <tr>
+          <td width="120"><label for="description">Description</label></td>
+          <td><input
+              type="text"
+              id="description"
+              name="description"
+              required
+            /></td>
+        </tr>
+        <tr>
+          <td width="120"><label for="price">Price</label></td>
+          <td><input type="text" id="price" name="price" required /></td>
+        </tr>
+        <tr>
+          <td width="120"><label for="thumbnails">Thumbnails</label></td>
+          <td><input
+              type="text"
+              id="thumbnails"
+              name="thumbnails"
+              required
+            /></td>
+        </tr>
+        <tr>
+          <td width="120"><label for="stock">Stock</label></td>
+          <td><input type="text" id="stock" name="stock" required /></td>
+        </tr>
+        <tr>
+          <td width="120"><label for="category">Category</label></td>
+          <td><input type="text" id="category" name="category" required /></td>
+        </tr>
+        <tr>
+          <td width="120"><label for="status">Status</label></td>
+          <td><input type="text" id="status" name="status" required /></td>
+        </tr>
+
+        <tr>
+          <td colspan="2" style="height: 20px;"></td>
+        </tr>
+        <tr>
+          <td colspan="2"><button type="submit">Add product</button></td>
+        </tr>
+      </table>
+    </form>
+  </div>
+
+  <div id="lista">
+    <h2>Product List</h2>
+
+    <div>
+      <label for="sortField">Campo de Ordenamiento:</label>
+      <select id="sortField">
+        <option value="title" {{#ifEquals sort 'title'}}selected{{/ifEquals}}>Título</option>
+        <option value="price" {{#ifEquals sort 'price'}}selected{{/ifEquals}}>Precio</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="sortOrder">Dirección de Ordenamiento:</label>
+      <select id="sortOrder">
+        <option value="asc">Ascendente</option>
+        <option value="desc">Descendente</option>
+      </select>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th>Thumbnails</th>
+          <th>Stock</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="list-container">
+        {{#each productsData.products}}
+          <tr>
+            <td>{{this.code}}</td>
+            <td>{{this.title}}</td>
+            <td>{{this.description}}</td>
+            <td>{{this.price}}</td>
+            <td>{{this.thumbnails}}</td>
+            <td>{{this.stock}}</td>
+            <td><button class="add-to-cart-btn" data-product-id="{{this._id}}">Add to cart</button></td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    <br />
+    <div style="display: block;">
+      {{#if productsData.hasPrevPage}}
+        <a href="?page={{productsData.prevPage}}&limit={{limit}}"><button
+          >Anterior</button></a>
+      {{/if}}
+      {{#if productsData.hasNextPage}}
+        <a href="?page={{productsData.nextPage}}&limit={{limit}}"><button
+          >Siguiente</button></a>
+      {{/if}}
+    </div>
+
+    <div>
+      <label for="limit">Tamaño de la paginación:</label>
+      <input type="number" id="limit" name="limit" min="1" value="{{limit}}" />
+      <button id="applyLimit">Aplicar</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- Configuración de Socket.IO en el cliente -->
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>
