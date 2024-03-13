@@ -1,4 +1,5 @@
 import express from "express";
+import { authentication } from "../middelwares/index.js";
 
 const viewsRouter = express.Router();
 
@@ -55,7 +56,7 @@ viewsRouter.get("/carts/:cid", (req, res) => {
     .then((data) => {
       console.log(data);
       res.render("cart.handlebars", {
-        productsData: data
+        productsData: data,
       });
     })
     .catch((error) => {
@@ -65,6 +66,20 @@ viewsRouter.get("/carts/:cid", (req, res) => {
 
 viewsRouter.get("/chat", (req, res) => {
   res.render("chat.handlebars", {});
+});
+
+viewsRouter.get("/login", (req, res) => {
+  res.render("login.handlebars");
+});
+
+viewsRouter.get("/signup", (req, res) => {
+  res.render("signup.handlebars");
+});
+
+viewsRouter.get("/profile", (req, res) => {
+  const { user } = req.session;
+  
+  res.render("profile.handlebars", {user});
 });
 
 export default viewsRouter;
