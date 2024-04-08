@@ -1,0 +1,27 @@
+
+    <div id="container">
+        <div id="lista">
+            <h2>HOME</h2>
+            <table>
+            <thead>
+                <tr>
+                    <th>Code</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Thumbnails</th>
+                    <th>Stock</th>
+                </tr>
+            </thead>
+            <tbody id="list-container">
+                {{#each list}}
+                    {{this}}
+                {{/each}}
+            </tbody>
+            </table>
+        </div>
+    </div>
+
+  <!-- Configuración de Socket.IO en el cliente -->
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>
