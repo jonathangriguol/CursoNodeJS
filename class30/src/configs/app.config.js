@@ -1,7 +1,11 @@
-
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config();
 
-const environment = process.env.ENVIRONMENT
+const environment = process.env.ENVIRONMENT;
 
-export default environment
+const messaging = {
+  EMAIL_USER: process.env.EMAIL_USER,
+  EMAIL_PASSWORD: process.env.EMAIL_PASSWORD,
+};
+
+export { environment, messaging };

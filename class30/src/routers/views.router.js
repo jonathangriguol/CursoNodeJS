@@ -95,6 +95,10 @@ viewsRouter.get("/forgot", (req, res) => {
   res.render("forgot-password.handlebars");
 });
 
+viewsRouter.get("/reset-password", (req, res) => {
+  res.render("reset-password.handlebars");
+});
+
 viewsRouter.get("/profile", passportCall('jwt'), applyPolicy(['USER', 'ADMIN']), (req, res) => {
   const { user } = req;
   res.render("profile.handlebars", {user});
