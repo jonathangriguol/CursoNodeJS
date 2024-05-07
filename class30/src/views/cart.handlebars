@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/cart.css" />
+    <!-- Aquí vinculas tu archivo CSS externo -->
+  </head>
+  <body>
+    <div id="container">
+      <div id="lista">
+        <h2>My Cart</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Price</th>
+              <th>Thumbnails</th>
+              <th>Qty</th>
+            </tr>
+          </thead>
+          <tbody id="list-container">
+            {{#each productsData.products}}
+              <tr>
+                <td>{{this.product.code}}</td>
+                <td>{{this.product.title}}</td>
+                <td>{{this.product.description}}</td>
+                <td>{{this.product.price}}</td>
+                <td>{{this.product.thumbnails}}</td>
+                <td>{{this.quantity}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+
+      <div id="buttons">
+        <form action="/api/carts/{{cartId}}/purchase" method="get">
+          <button class="btn btn-success btn-lg"> Confirm buy </button>
+        </form>
+
+        <form action="/views/realtimeproducts" method="get">
+          <button class="btn btn-primary btn-lg"> Continue shopping </button>
+        </form>
+      </div>
+
+    </div>
+
+  </body>
+</html>
+
+<!-- Configuración de Socket.IO en el cliente -->
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/cart.js"></script>
