@@ -1,0 +1,4 @@
+{
+    "watch": ["*.yaml"],
+    "ext": "yaml"
+}
