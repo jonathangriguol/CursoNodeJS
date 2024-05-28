@@ -42,9 +42,10 @@ const specs = swaggerJSDoc(swaggerOptions);
 
 app.use('/docs', swaggerUIExpress.serve, swaggerUIExpress.setup(specs));
 
+const PORT = process.env.PORT || 8080;
 
-const httpServer = app.listen(8080, () => {
-  console.log("Server started at port: 8080");
+const httpServer = app.listen(PORT, () => {
+  console.log(`Server started at port: ${PORT}`);
 });
 
 const io = new Server(httpServer, {
