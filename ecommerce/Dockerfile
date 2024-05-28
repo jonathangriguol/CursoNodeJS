@@ -1,6 +1,6 @@
 FROM node
 
-WORKDIR /coder-ecommerce
+WORKDIR /ecommerce
 
 COPY package*.json .
 
