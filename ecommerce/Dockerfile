@@ -1,6 +1,6 @@
-FROM node
+FROM node:18-alpine
 
-WORKDIR /ecommerce
+WORKDIR /
 
 COPY package*.json .
 
@@ -8,6 +8,6 @@ RUN npm i
 
 COPY . .
 
-EXPOSE 3000
+EXPOSE 8080
 
 CMD ["node", "src/app.js"]
