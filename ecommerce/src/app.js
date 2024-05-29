@@ -22,6 +22,7 @@ import { addLogger } from "./utils/logger.utils.js";
 import loggerController from "./controllers/logger.controller.js";
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUIExpress from 'swagger-ui-express';
+import stripeController from "./controllers/stripe.controller.js";
 
 const app = express();
 
@@ -91,6 +92,8 @@ app.use("/api", chatsController);
 app.use("/auth", authController);
 app.use("/users", usersRouter);
 app.use("/sessions", sessionsController);
+// Pasarela de pago
+app.post("/stripe", stripeController);
 
 // utilizo ruta views para las vistas
 app.use("/views", viewsRouter);

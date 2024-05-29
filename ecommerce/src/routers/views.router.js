@@ -5,18 +5,20 @@ import { privateAccess } from "../middelwares/authorization.middelware.js";
 import { purchaseView } from "../controllers/views.controller.js";
 import { Cart } from "../models/cart.model.js";
 import { Users } from "../models/user.model.js";
+import { addLogger } from "../utils/logger.utils.js";
 
 const viewsRouter = express.Router();
+viewsRouter.use(addLogger);
 
 viewsRouter.get("/home", (req, res) => {
   res.render("home.handlebars", {});
 });
 
-viewsRouter.get("/realtimeproducts", passportCall('jwt'), async (req, res) => {
+viewsRouter.get("/realtimeproducts", passportCall("jwt"), async (req, res) => {
   const defaultLimit = 3;
   const defaultSort = "asc";
-  
-  console.log("🚀 ~ viewsRouter.get ~ req.user:", req.user)
+
+  console.log("🚀 ~ viewsRouter.get ~ req.user:", req.user);
 
   const userId = req.user?._id;
 
@@ -68,7 +70,7 @@ viewsRouter.get("/carts/:cid", (req, res) => {
       console.log(data);
       res.render("cart.handlebars", {
         productsData: data,
-        cartId
+        cartId,
       });
     })
     .catch((error) => {
@@ -76,8 +78,44 @@ viewsRouter.get("/carts/:cid", (req, res) => {
     });
 });
 
+viewsRouter.get(
+  "/carts/:cid/purchase",
+  passportCall("jwt"),
+  applyPolicy(["USER", "ADMIN"]),
+  privateAccess,
+  purchaseView
+);
 
-viewsRouter.get('/carts/:cid/purchase', passportCall('jwt'), applyPolicy(['USER' , 'ADMIN']), privateAccess, purchaseView);
+viewsRouter.get("/checkout", (req, res) => {
+  const checkout = {
+    ticket: {
+      amount: 800,
+      purchaser: "",
+      _id: "6656832746eb1a001716abcc",
+      code: "98445d41-1bf6-48b3-980b-6158a6457d22",
+      purchase_datetime: "2024-05-29T01:21:43.993Z",
+      __v: 0,
+    },
+    processedProducts: [
+      {
+        _id: "65d690bdf279a745cff66a99",
+        code: "A01",
+        title: "Playstation",
+        description: "consola",
+        price: 800,
+        thumbnails: ["uno.jpg"],
+        stock: 8,
+        category: "gaming",
+        status: true,
+        __v: 0,
+      },
+    ],
+  };
+
+  req.logger.info(`Checkout: ${checkout}`);
+
+  res.render('checkout-cart.handlebars', { purchase: checkout });
+});
 
 viewsRouter.get("/chat", (req, res) => {
   res.render("chat.handlebars", {});
@@ -99,9 +137,14 @@ viewsRouter.get("/reset-password", (req, res) => {
   res.render("reset-password.handlebars");
 });
 
-viewsRouter.get("/profile", passportCall('jwt'), applyPolicy(['USER', 'ADMIN']), (req, res) => {
-  const { user } = req;
-  res.render("profile.handlebars", {user});
-});
+viewsRouter.get(
+  "/profile",
+  passportCall("jwt"),
+  applyPolicy(["USER", "ADMIN"]),
+  (req, res) => {
+    const { user } = req;
+    res.render("profile.handlebars", { user });
+  }
+);
 
 export default viewsRouter;
